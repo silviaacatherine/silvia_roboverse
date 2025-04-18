@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JEE/NSET Doubt Solver</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    textarea {
+      width: 80%;
+      height: 150px;
+      font-size: 16px;
+      padding: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 30px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #solution {
+      margin-top: 30px;
+      font-size: 18px;
+      color: #333;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>JEE/NSET Doubt Solver 🤖</h1>
+  <textarea id="question" placeholder="Type your question here..."></textarea><br>
+  <button onclick="sendQuestion()">Solve</button>
+  <div id="solution"></div>
+
+  <script>
+    async function sendQuestion() {
+      const question = document.getElementById("question").value;
+      const res = await fetch("http://localhost:5000/solve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+      });
+      const data = await res.json();
+      document.getElementById("solution").innerText = data.solution;
+    }
+  </script>
+</body>
+</html>
